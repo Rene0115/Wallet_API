@@ -2,9 +2,13 @@ import express from "express";
 import pino from "pino";
 import dotenv from "dotenv";
 import database from "./config/db.config.js";
+import middleware from "./middleware/middleware.js";
 dotenv.config();
 
+
 const app = express();
+
+middleware(app);
 
 const logger = pino();
 

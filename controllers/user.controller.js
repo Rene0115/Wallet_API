@@ -27,10 +27,11 @@ class UserController {
         })
        }
        const userExists = await userModel.findOne({email: data.email})
-       if (!(_.isEmpty(userExists))) {
+       const usernameExists = await userModel.findOne({username: data.username})
+       if (!(_.isEmpty(userExists || usernameExists))) {
          return res.status(StatusCodes.NOT_ACCEPTABLE).send({
             success: false,
-            message: 'User with this email already exists'
+            message: 'User with this email or username already exists'
          })
        }
        const user = await userModel.create(data);
