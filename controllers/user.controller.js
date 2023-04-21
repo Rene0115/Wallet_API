@@ -18,7 +18,7 @@ class UserController {
         lastname: req.body.lastname,
         password: req.body.password,
         phone: req.body.phone,
-        image: imageUrl
+        profilePhoto: imageUrl
        }
        if (!data.email || !data.password || !data.phone || !data.firstname || !data.username || !data.lastname) {
         return res.status(StatusCodes.BAD_REQUEST).send({
