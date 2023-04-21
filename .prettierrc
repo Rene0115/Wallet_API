@@ -1,4 +1,12 @@
 {
-    "trailingComma": "none"
+    "trailingComma": "none",
+    "overrides": [
+      {
+        "files": "*.{js,jsx,ts,tsx}",
+        "options": {
+          "import/extensions": [".js", ".jsx", ".ts", ".tsx"]
+        }
+      }
+    ]
   }
   

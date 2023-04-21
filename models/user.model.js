@@ -22,6 +22,10 @@ const UserSchema = mongoose.Schema({
     required: true,
     unique: true
   },
+  password: {
+    type: String,
+    required: true
+  },
   balance: {
     type: Number,
     default: 0
