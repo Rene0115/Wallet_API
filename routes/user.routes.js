@@ -5,5 +5,6 @@ import store from "../config/multer.config.js";
 const userRouter = express.Router();
 
 userRouter.post('/signup', [store.single('image')] ,userController.signup);
+userRouter.post('/login', userController.login);
 
 export default userRouter;
