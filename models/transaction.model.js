@@ -29,4 +29,6 @@ const transactionSchema = mongoose.Schema({
   versionKey: false
 })
 
+const transactionModel = mongoose.model("Transaction", transactionSchema);
 
+export default transactionModel;
