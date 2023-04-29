@@ -13,15 +13,15 @@ const UserSchema = mongoose.Schema(
     },
     firstname: {
       type: String,
-      required: true
+      //required: true
     },
     lastname: {
       type: String,
-      required: true
+      //required: true
     },
     username: {
       type: String,
-      required: true,
+      //required: true,
       unique: true
     },
     password: {
@@ -39,30 +39,8 @@ const UserSchema = mongoose.Schema(
       type: Number,
       unique: true
     },
-    transactions: [
-      {
-        transaction_type: {
-          type: String,
-          enum: ["debit", "credit"]
-        },
-        transaction_amount: {
-          type: Number,
-          validate: {
-            validator: function (v) {
-              return v % 1 === 0 && v > 0;
-            },
-            message: (props) => `${props.value} is not a positive integer`
-          }
-        },
-        transaction_date: {
-          type: Date,
-          default: Date.now
-        }
-      }
-    ]
   },
-  {
-    timestamps: { currentTime: () => Date.now() + nigeriaOffset },
+  {timestamps: { currentTime: () => Date.now() + nigeriaOffset },
     versionKey: false
   }
 );
@@ -77,9 +55,7 @@ UserSchema.methods.createJWT = function () {
   return jwt.sign(
     { _id: this._id, username: this.username },
     process.env.JWT_SECRET,
-    {
-      expiresIn: process.env.JWT_LIFETIME
-    }
+    { expiresIn: process.env.JWT_LIFETIME }
   );
 };
 

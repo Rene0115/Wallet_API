@@ -12,30 +12,23 @@ class UserController {
     const imageUrl = image.url;
     const data = {
       email: req.body.email,
-      firstname: req.body.firstname,
-      username: req.body.username,
-      lastname: req.body.lastname,
+      firstname: req?.body.firstname,
+      username: req?.body.username,
+      lastname: req?.body.lastname,
       password: req.body.password,
-      phone: req.body.phone,
+      phone: req?.body.phone,
       profilePhoto: imageUrl
     };
-    if (
-      !data.email ||
-      !data.password ||
-      !data.phone ||
-      !data.firstname ||
-      !data.username ||
-      !data.lastname
-    ) {
+    if (!data.email || !data.password ) {
       return res.status(StatusCodes.BAD_REQUEST).send({
         success: false,
         message:
-          "Must provide email, password, phone number, username, firstname and lastname"
+          "Must provide email, password"
       });
     }
     const userExists = await userModel.findOne({ email: data.email });
-    const usernameExists = await userModel.findOne({ username: data.username });
-    if (!_.isEmpty(userExists || usernameExists)) {
+   // const usernameExists = await userModel.findOne({ username: data.username });
+    if (!_.isEmpty(userExists )) {
       return res.status(StatusCodes.NOT_ACCEPTABLE).send({
         success: false,
         message: "User with this email or username already exists"
