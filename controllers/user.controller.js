@@ -8,8 +8,11 @@ dotenv.config();
 
 class UserController {
   async signup(req, res) {
-    const image = await uploadImage(req.file.path);
-    const imageUrl = image.url;
+    let imageUrl = null;
+    if (req.file && req.file.path) {
+      const image = await uploadImage(req.file.path);
+      imageUrl = image.url;
+    }
     const data = {
       email: req.body.email,
       firstname: req?.body.firstname,
@@ -19,16 +22,15 @@ class UserController {
       phone: req?.body.phone,
       profilePhoto: imageUrl
     };
-    if (!data.email || !data.password ) {
+    if (!data.email || !data.password) {
       return res.status(StatusCodes.BAD_REQUEST).send({
         success: false,
-        message:
-          "Must provide email, password"
+        message: "Must provide email, password"
       });
     }
     const userExists = await userModel.findOne({ email: data.email });
-   // const usernameExists = await userModel.findOne({ username: data.username });
-    if (!_.isEmpty(userExists )) {
+    // const usernameExists = await userModel.findOne({ username: data.username });
+    if (!_.isEmpty(userExists)) {
       return res.status(StatusCodes.NOT_ACCEPTABLE).send({
         success: false,
         message: "User with this email or username already exists"
@@ -44,7 +46,7 @@ class UserController {
 
     return res.status(StatusCodes.CREATED).send({
       success: true,
-      data: user
+      data: { ...user.toObject(), password: undefined }
     });
   }
   async login(req, res) {
